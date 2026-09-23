@@ -5,7 +5,8 @@ import {
   createClaudeAccountsApi,
   createCodexAccountsApi,
   createGrokAccountsApi,
-  createMiniMaxCredentialsApi
+  createMiniMaxCredentialsApi,
+  createModelProviderSettingsApi
 } from './preload-api/web-agent-accounts-api'
 import { createWebAgentStatusApi } from './preload-api/web-agent-status-api'
 import { createWebAiVaultApi } from './preload-api/web-ai-vault-api'
@@ -107,6 +108,7 @@ function createWebPreloadApi(): Partial<PreloadApi> {
     rateLimits: createRateLimitsApi(),
     minimaxCredentials: createMiniMaxCredentialsApi(),
     grokAccounts: createGrokAccountsApi(),
+    modelProviders: createModelProviderSettingsApi(),
     codexAccounts: createCodexAccountsApi(),
     claudeAccounts: createClaudeAccountsApi(),
     cli: createCliApi(),

@@ -1,5 +1,32 @@
 import type { PreloadApi } from '../../../../preload/api-types'
 
+export function createModelProviderSettingsApi(): PreloadApi['modelProviders'] {
+  const unsupportedError = new Error(
+    'Model provider credential storage is only available in the desktop app.'
+  )
+  const statusFor = (providerId: 'openrouter') => ({
+    providerId,
+    configured: false,
+    storedApiKeyConfigured: false,
+    environmentApiKeyConfigured: false
+  })
+  return {
+    getStatus: async (providerId) => statusFor(providerId),
+    saveApiKey: async () => {
+      throw unsupportedError
+    },
+    clearApiKey: async (providerId) => statusFor(providerId),
+    diagnose: async (providerId) => ({
+      ...statusFor(providerId),
+      catalogReachable: false,
+      modelCount: 0,
+      toolsCapableModelCount: 0,
+      structuredOutputModelCount: 0,
+      error: unsupportedError.message
+    })
+  }
+}
+
 export function createMiniMaxCredentialsApi(): NonNullable<
   Partial<PreloadApi>['minimaxCredentials']
 > {

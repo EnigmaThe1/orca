@@ -217,6 +217,29 @@ export const getAccountsGrokSearchEntries = createLocalizedCatalog(() => [
   }
 ])
 
+export const getAccountsOpenRouterSearchEntries = createLocalizedCatalog(() => [
+  {
+    title: translate('auto.components.settings.accounts.search.c4e8a2d6f0', 'OpenRouter'),
+    description: translate(
+      'auto.components.settings.accounts.search.d5f9b3e7a1',
+      'Store an OpenRouter API key for model discovery and inference. The key stays in Orca’s encrypted host secret store.'
+    ),
+    keywords: [
+      ...translateSearchKeyword(
+        'auto.components.settings.accounts.search.e6a0c4f8b2',
+        'openrouter'
+      ),
+      ...translateSearchKeyword(
+        'auto.components.settings.accounts.search.f7b1d5a9c3',
+        'model provider'
+      ),
+      ...translateSearchKeyword('auto.components.settings.accounts.search.a8c2e6b0d4', 'inference'),
+      ...translateSearchKeyword('auto.components.settings.accounts.search.3a9b6d2c4e', 'api key'),
+      ...translateSearchKeyword('auto.components.settings.accounts.search.9f70aa706c', 'provider')
+    ]
+  }
+])
+
 export const getAccountsPaneSearchEntries = createLocalizedCatalog((): SettingsSearchEntry[] => [
   ...getAccountsLocationSearchEntries(),
   ...getAccountsClaudeSearchEntries(),
@@ -224,5 +247,6 @@ export const getAccountsPaneSearchEntries = createLocalizedCatalog((): SettingsS
   ...getAccountsGeminiSearchEntries(),
   ...getAccountsOpencodeSearchEntries(),
   ...getAccountsMiniMaxSearchEntries(),
-  ...getAccountsGrokSearchEntries()
+  ...getAccountsGrokSearchEntries(),
+  ...getAccountsOpenRouterSearchEntries()
 ])

@@ -9017,7 +9017,12 @@
             "b2c4e7f1a8": "endpoint",
             "3a9b6d2c4e": "api key",
             "5d8f1a3b7c": "china",
-            "7e2a4b8c1d": "overseas"
+            "7e2a4b8c1d": "overseas",
+            "c4e8a2d6f0": "OpenRouter",
+            "d5f9b3e7a1": "Store an OpenRouter API key for model discovery and inference. The key stays in Orca’s encrypted host secret store.",
+            "e6a0c4f8b2": "openrouter",
+            "f7b1d5a9c3": "model provider",
+            "a8c2e6b0d4": "inference"
           }
         },
         "advanced": {
@@ -11258,6 +11263,29 @@
           "f08c41de73": "Session expired — run grok on the computer running Orca and wait for it to start. If prompted, complete sign-in, then click Refresh usage. No chat message is needed.",
           "0bb18642b7": "Usage",
           "a8f4139350": "Grok reported no usage percentage for this account."
+        },
+        "ModelProviderAccountsSection": {
+          "heading": "OpenRouter",
+          "description": "Configure OpenRouter model discovery and inference. The API key stays in Orca’s encrypted host secret store.",
+          "openRouterDescription": "Discover models and run completions through OpenRouter without exposing the API key to renderer state.",
+          "notConfigured": "Not configured",
+          "environment": "Environment",
+          "saved": "Saved",
+          "keyRequired": "OpenRouter API key is required.",
+          "keySaved": "OpenRouter API key saved.",
+          "keySaveFailed": "OpenRouter API key update failed.",
+          "keyClearFailed": "Could not forget the OpenRouter API key.",
+          "diagnosticFailed": "OpenRouter diagnostic failed.",
+          "catalogReachable": "Catalogue reachable",
+          "apiKey": "OpenRouter API key",
+          "apiKeyPlaceholder": "Paste your OpenRouter API key",
+          "replace": "Replace",
+          "save": "Save",
+          "forget": "Forget key",
+          "environmentHint": "OPENROUTER_API_KEY is active for this Orca process and takes priority over the stored key.",
+          "storageHint": "The saved key is encrypted by Orca’s host secret store and is never written to repository state.",
+          "diagnose": "Run diagnostic",
+          "diagnosticSummary": "{{value0}} models · {{value1}} tool-capable · {{value2}} structured-output"
         },
         "AppearanceWindowSidebarSection": {
           "usagePercentageDisplayUsed": "Used",

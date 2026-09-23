@@ -5,6 +5,7 @@ import type {
   GrokAccountsApi,
   MinimaxCredentialsApi
 } from './api/agent-account-api'
+import type { ModelProviderSettingsApi } from './api/model-provider-settings-api'
 import type { HooksApi } from './api/agent-hook-api'
 import type { SkillsApi } from './api/agent-skill-api'
 import type { AgentAwakeApi, AgentStatusApi, AgentTrustApi } from './api/agent-status-api'
@@ -143,6 +144,7 @@ export type PreloadApi = {
   rateLimits: RateLimitsApi
   minimaxCredentials: MinimaxCredentialsApi
   grokAccounts: GrokAccountsApi
+  modelProviders: ModelProviderSettingsApi
   ssh: SshApi
   automations: AutomationsApi
   wsl: RuntimeApi['wsl']
@@ -154,6 +156,7 @@ export type PreloadApi = {
   speech: SpeechApi
 }
 
+export type { ModelProviderSettingsApi } from './api/model-provider-settings-api'
 export type {
   ClaudeUsageApi,
   CodexUsageApi,

@@ -17,6 +17,7 @@ vi.mock('./settings-search-keywords', () => ({
 
 import {
   getAccountsMiniMaxSearchEntries,
+  getAccountsOpenRouterSearchEntries,
   getAccountsOpencodeSearchEntries,
   getAccountsPaneSearchEntries
 } from './accounts-search'
@@ -44,6 +45,18 @@ describe('getAccountsMiniMaxSearchEntries', () => {
     const allEntries = getAccountsPaneSearchEntries()
     const titles = allEntries.map((entry) => entry.title)
     expect(titles).toContain('MiniMax Usage')
+  })
+})
+
+describe('getAccountsOpenRouterSearchEntries', () => {
+  it('indexes OpenRouter under model-provider search terms', () => {
+    const [entry] = getAccountsOpenRouterSearchEntries()
+    expect(entry.title).toBe('OpenRouter')
+    expect(entry.description.toLowerCase()).toContain('encrypted')
+    expect(entry.keywords).toEqual(
+      expect.arrayContaining(['openrouter', 'model provider', 'api key', 'inference'])
+    )
+    expect(getAccountsPaneSearchEntries().map((item) => item.title)).toContain('OpenRouter')
   })
 })
 

@@ -168,6 +168,61 @@ describe('AccountsPane', () => {
     ).not.toContain('disabled=""')
   })
 
+  it('shows the OpenRouter credential section only on the local desktop host', () => {
+    const markup = renderPane(getDefaultSettings('/tmp'))
+
+    expect(markup).toContain('id="accounts-openrouter"')
+    expect(markup).toContain('OpenRouter API key')
+    expect(markup).toContain('Claude')
+    expect(markup).toContain('Codex')
+  })
+
+  it('hides the OpenRouter credential section when Accounts is scoped to WSL', () => {
+    const markup = renderPane(
+      {
+        ...getDefaultSettings('/tmp'),
+        localAccountRuntime: 'wsl'
+      },
+      { wslSupportedPlatform: true, wslAvailable: true, wslDistros: ['Ubuntu'] }
+    )
+
+    expect(markup).not.toContain('id="accounts-openrouter"')
+    expect(markup).not.toContain('OpenRouter API key')
+    expect(markup).toContain('Claude')
+    expect(markup).toContain('Codex')
+  })
+
+  it('hides the OpenRouter credential section when a Remote Orca Server owns Accounts', () => {
+    const markup = renderPane({
+      ...getDefaultSettings('/tmp'),
+      activeRuntimeEnvironmentId: 'env-1'
+    })
+
+    expect(markup).not.toContain('id="accounts-openrouter"')
+    expect(markup).not.toContain('OpenRouter API key')
+    expect(markup).toContain('Showing accounts managed by the remote server')
+    expect(markup).toContain('Claude')
+    expect(markup).toContain('Codex')
+  })
+
+  it('hides the OpenRouter credential editor on the web client', () => {
+    const webGlobal = globalThis as { window?: { __ORCA_WEB_CLIENT__?: boolean } }
+    const hadWindow = 'window' in webGlobal
+    webGlobal.window = { ...webGlobal.window, __ORCA_WEB_CLIENT__: true }
+    try {
+      const markup = renderPane(getDefaultSettings('/tmp'))
+
+      expect(markup).not.toContain('id="accounts-openrouter"')
+      expect(markup).not.toContain('OpenRouter API key')
+      expect(markup).toContain('Claude')
+      expect(markup).toContain('Codex')
+    } finally {
+      if (!hadWindow) {
+        delete webGlobal.window
+      }
+    }
+  })
+
   it('tells users to paste the OpenCode console session cookie, not auth alone', () => {
     const markup = renderPane(getDefaultSettings('/tmp'))
 

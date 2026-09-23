@@ -380,6 +380,9 @@ export function AccountsPane({
     matchesSettingsSearch(searchQuery, getAccountsGrokSearchEntries()) ? (
       <GrokAccountsSection key="grok" />
     ) : null,
+    !isRemoteAccountScope &&
+    accountRuntime.runtime === 'host' &&
+    !isWebClientLocation() &&
     matchesSettingsSearch(searchQuery, getAccountsOpenRouterSearchEntries()) ? (
       <ModelProviderAccountsSection key="openrouter" />
     ) : null

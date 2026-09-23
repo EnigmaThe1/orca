@@ -140,9 +140,7 @@ export class OpenRouterProvider implements ModelProvider {
       headers.Authorization = `Bearer ${this.apiKey}`
     }
 
-    const requiresZeroRetention =
-      request.dataPolicy?.zeroDataRetention === true ||
-      request.dataPolicy?.dataCollection === 'deny'
+    const requiresZeroRetention = request.dataPolicy?.zeroDataRetention === true
     const modelsUrl = this.apiKey
       ? `${this.baseUrl}/models/user`
       : `${this.baseUrl}/models${requiresZeroRetention ? '?zdr=true' : ''}`

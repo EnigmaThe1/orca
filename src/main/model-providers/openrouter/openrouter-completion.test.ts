@@ -143,6 +143,41 @@ describe('OpenRouter completion translation', () => {
     })
   })
 
+  it('maps data-collection denial independently of ZDR', () => {
+    expect(
+      buildOpenRouterCompletionBody({
+        model: 'vendor/coder',
+        messages: [{ role: 'user', content: 'Inspect the repository.' }],
+        dataPolicy: { dataCollection: 'deny' }
+      })
+    ).toMatchObject({
+      provider: {
+        data_collection: 'deny'
+      }
+    })
+    expect(
+      buildOpenRouterCompletionBody({
+        model: 'vendor/coder',
+        messages: [{ role: 'user', content: 'Inspect the repository.' }],
+        dataPolicy: { dataCollection: 'deny' }
+      }).provider
+    ).not.toMatchObject({ zdr: true })
+  })
+
+  it('maps an explicit ZDR requirement independently of data collection', () => {
+    expect(
+      buildOpenRouterCompletionBody({
+        model: 'vendor/coder',
+        messages: [{ role: 'user', content: 'Inspect the repository.' }],
+        dataPolicy: { zeroDataRetention: true }
+      })
+    ).toMatchObject({
+      provider: {
+        zdr: true
+      }
+    })
+  })
+
   it('maps the reusable data-retention policy into OpenRouter provider routing controls', () => {
     expect(
       buildOpenRouterCompletionBody({

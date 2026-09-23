@@ -1,4 +1,5 @@
 import { ipcMain } from 'electron'
+import { DEFAULT_MODEL_DATA_POLICY } from '../../shared/model-generation-types'
 import type { ModelProviderId } from '../../shared/model-provider-types'
 import type {
   ModelProviderDiagnostic,
@@ -44,7 +45,7 @@ async function diagnoseProvider(providerId: ModelProviderId): Promise<ModelProvi
   const status = statusFor(providerId)
   try {
     const provider = createDefaultModelProvider(providerId)
-    const catalog = await provider.listModels()
+    const catalog = await provider.listModels({ dataPolicy: DEFAULT_MODEL_DATA_POLICY })
     return {
       ...status,
       catalogReachable: true,

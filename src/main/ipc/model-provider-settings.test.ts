@@ -60,6 +60,7 @@ vi.mock('../model-providers/default-model-provider-registry', () => ({
   })
 }))
 
+import { DEFAULT_MODEL_DATA_POLICY } from '../../shared/model-generation-types'
 import { registerModelProviderSettingsHandlers } from './model-provider-settings'
 
 async function invoke(channel: string, ...args: unknown[]): Promise<unknown> {
@@ -147,5 +148,6 @@ describe('model provider settings IPC', () => {
       structuredOutputModelCount: 1,
       error: null
     })
+    expect(listModelsMock).toHaveBeenCalledWith({ dataPolicy: DEFAULT_MODEL_DATA_POLICY })
   })
 })

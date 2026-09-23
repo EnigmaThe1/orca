@@ -155,6 +155,42 @@ describe('OpenRouterProvider', () => {
     )
   })
 
+  it('does not treat data-collection denial as a ZDR catalogue filter', async () => {
+    const fetchImpl = vi.fn(async (input: Parameters<typeof fetch>[0]) => {
+      const url = String(input)
+      if (url.endsWith('/models/user') || url.endsWith('/models')) {
+        return new Response(JSON.stringify({ data: [] }), {
+          status: 200,
+          headers: { 'content-type': 'application/json' }
+        })
+      }
+      throw new Error(`unexpected URL: ${url}`)
+    })
+    const keyed = new OpenRouterProvider({
+      apiKey: TEST_API_KEY,
+      baseUrl: 'https://router.example/v1',
+      fetchImpl
+    })
+
+    await keyed.listModels({ dataPolicy: { dataCollection: 'deny' } })
+
+    expect(fetchImpl).toHaveBeenCalledWith(
+      'https://router.example/v1/models/user',
+      expect.objectContaining({ method: 'GET' })
+    )
+    expect(fetchImpl).not.toHaveBeenCalledWith(
+      expect.stringContaining('/endpoints/zdr'),
+      expect.anything()
+    )
+
+    const keyless = new OpenRouterProvider({ fetchImpl })
+    await keyless.listModels({ dataPolicy: { dataCollection: 'deny' } })
+    expect(fetchImpl).toHaveBeenCalledWith(
+      'https://openrouter.ai/api/v1/models',
+      expect.objectContaining({ method: 'GET' })
+    )
+  })
+
   it('fails closed when ZDR endpoint discovery is unavailable', async () => {
     const fetchImpl = vi.fn(async (input: Parameters<typeof fetch>[0]) => {
       const url = String(input)
